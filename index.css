@@ -1,0 +1,350 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-dark: #050506;
+  --color-navy-card: #0F0F12;
+  --color-navy-light: #1D1D22;
+  --color-accent-indigo: #EF4444; /* Overriding accent-indigo to red to fallback-proof any tailwind config */
+  --color-accent-red: #EF4444;
+  --color-slate-muted: #88889C;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-[#050506] text-slate-100 font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  .font-mono-code {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom Scrollbar (Hacker styled red scrollbar) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050506;
+}
+::-webkit-scrollbar-thumb {
+  background: #2D1515;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #EF4444;
+}
+
+/* Blink cursor for typewriter */
+.typewriter-cursor::after {
+  content: '_';
+  animation: blink 0.8s step-end infinite;
+  color: #EF4444;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  from, to { color: transparent }
+  50% { color: #EF4444; }
+}
+
+/* CRT monitor flicker/scanline overlay */
+.crt-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.crt-overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+  background-size: 100% 3px;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Premium Coding Glassmorphism (Black & Crimson) */
+.glass-panel {
+  background: rgba(15, 15, 18, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(239, 68, 68, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(20, 15, 15, 0.85);
+  border-color: rgba(239, 68, 68, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px -10px rgba(239, 68, 68, 0.15);
+}
+
+/* Cyberpunk Digital Grid Background */
+.bg-dots {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(239, 68, 68, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(239, 68, 68, 0.03) 1px, transparent 1px);
+}
+
+/* Glowing red text & UI effect */
+.glow-text-red {
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.glow-red {
+  position: relative;
+}
+.glow-red::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 15px 0px rgba(239, 68, 68, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.glow-red:hover::after {
+  opacity: 1;
+}
+
+/* Retro green phosphor style for compiler results */
+.phosphor-green {
+  color: #10B981;
+  text-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+}
+
+/* Scanline Animation */
+@keyframes scanline-anim {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scanline-moving::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: rgba(239, 68, 68, 0.1);
+  animation: scanline-anim 6s linear infinite;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* 3D Orbit Styling for Tech Stack Hologram */
+.orbit-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.orbit-ring {
+  transform-style: preserve-3d;
+  animation: rotateOrbit 32s linear infinite;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbit-ring:hover {
+  animation-play-state: paused;
+}
+
+.orbit-item {
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  backface-visibility: visible;
+}
+
+.orbit-item-inner {
+  transform-style: preserve-3d;
+  animation: counterRotateOrbit 32s linear infinite;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.orbit-ring:hover .orbit-item-inner {
+  animation-play-state: paused;
+}
+
+@keyframes rotateOrbit {
+  0% {
+    transform: rotateY(0deg) rotateX(12deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(12deg);
+  }
+}
+
+@keyframes counterRotateOrbit {
+  0% {
+    transform: rotateY(0deg) rotateX(-12deg);
+  }
+  100% {
+    transform: rotateY(-360deg) rotateX(-12deg);
+  }
+}
+
+/* 3D Flip Card Styles */
+.flip-card {
+  background-color: transparent;
+  width: 250px;
+  height: 310px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background: rgba(15, 15, 18, 0.9);
+  border: 1.5px solid rgba(239, 68, 68, 0.15);
+  color: white;
+}
+
+.flip-card-back {
+  background: rgba(10, 10, 12, 0.95);
+  border: 1.5px solid rgba(239, 68, 68, 0.35);
+  box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1);
+  color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Coder Character Illustration Animations */
+@keyframes typingHandLeft {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(-1.5deg); }
+}
+
+@keyframes typingHandRight {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-3.5px) rotate(2deg); }
+}
+
+.animate-typing-left {
+  animation: typingHandLeft 0.15s ease-in-out infinite;
+}
+
+.animate-typing-right {
+  animation: typingHandRight 0.13s ease-in-out infinite;
+}
+
+@keyframes headBob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(1.5px); }
+}
+
+.animate-head-bob {
+  animation: headBob 2.5s ease-in-out infinite;
+}
+
+@keyframes screenPulse {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.35; }
+}
+
+.animate-screen-glow {
+  animation: screenPulse 2s ease-in-out infinite;
+}
+
+@keyframes codeFloatUp {
+  0% { transform: translateY(15px) scale(0.8); opacity: 0; }
+  30% { opacity: 0.75; }
+  100% { transform: translateY(-35px) scale(1); opacity: 0; }
+}
+
+.animate-code-float-1 {
+  animation: codeFloatUp 2.8s infinite linear;
+}
+
+.animate-code-float-2 {
+  animation: codeFloatUp 3.5s infinite linear 0.9s;
+}
+
+.animate-code-float-3 {
+  animation: codeFloatUp 3.1s infinite linear 1.8s;
+}
+
+/* Waving GitHub Octocat Arm Animation (Waves when card is flipped/hovered) */
+@keyframes waveGithubArm {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(20deg); }
+}
+
+.animate-github-arm {
+  transform-origin: 125px 75px;
+  transition: transform 0.3s ease;
+}
+
+/* Activate waving arm on flip card hover */
+.flip-card:hover .animate-github-arm {
+  animation: waveGithubArm 0.6s ease-in-out infinite;
+}
+
+/* Dr. Strange concentric magic ring animations */
+@keyframes spinSlow {
+  from { transform: rotateX(75deg) rotateZ(0deg); }
+  to { transform: rotateX(75deg) rotateZ(360deg); }
+}
+
+@keyframes spinReverseSlow {
+  from { transform: rotateX(75deg) rotateZ(360deg); }
+  to { transform: rotateX(75deg) rotateZ(0deg); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 25s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-spin-reverse-slow {
+  animation: spinReverseSlow 20s linear infinite;
+  transform-style: preserve-3d;
+}
+
+
